@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: air_description
+    relative_path: urdf/air.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/urdf.srdf
+  CONFIG:
+    author_name: Cenk Çetin
+    author_email: cenk.cetin@altinay.com
+    generated_timestamp: 1673432929

@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/cenk/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/cenk/catkin_ws/src/air_hardware_interface/include/**",
+        "/home/cenk/catkin_ws/src/air_moveit_config/include/**",
+        "/home/cenk/catkin_ws/src/moveit_task_constructor/core/include/**",
+        "/home/cenk/catkin_ws/src/moveit_task_constructor/demo/include/**",
+        "/home/cenk/catkin_ws/src/octomap_mapping/octomap_server/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_control/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_driver/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_gazebo/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_hardware_interface/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_msgs/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_srvs/include/**",
+        "/home/cenk/catkin_ws/src/qbdevice-ros/qb_device_utils/include/**",
+        "/home/cenk/catkin_ws/src/qbhand-ros/qb_hand_gazebo/include/**",
+        "/home/cenk/catkin_ws/src/qbhand-ros/qb_hand_hardware_interface/include/**",
+        "/home/cenk/catkin_ws/src/realsense-ros/realsense2_camera/include/**",
+        "/home/cenk/catkin_ws/src/moveit_task_constructor/rviz_marker_tools/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

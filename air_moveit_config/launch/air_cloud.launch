@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- MoveIt options -->
+  <arg name="pipeline" default="ompl" doc="Planning pipeline to use with MoveIt"/>
+  <!-- Launch MoveIt -->
+  <include file="$(dirname)/demo.launch" pass_all_args="true"/>
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+    <!--arg name="base_frame_id" value="camera_link"/-->
+</launch>
