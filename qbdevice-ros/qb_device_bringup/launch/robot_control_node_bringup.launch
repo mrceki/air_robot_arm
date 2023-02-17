@@ -2,8 +2,9 @@
   <!-- robot settings -->
   <arg name="control_duration" default="0.01" doc="The duration of the control loop [s]."/>
   <arg name="robot_activate_control" default="true" doc="Choose whether to activate robot_control or not (e.g. for sensor devices)."/>
+  <arg name="robot_hardware" default="[qbhand1]"  doc="Fake arg: ros_comm#889"/>
 
-  <!-- load parameters -->
+  <!-- load parameters -->  
   <param name="control_duration" type="double" value="$(arg control_duration)"/>
   <rosparam subst_value="true">
     robot_activate_control: $(arg robot_activate_control)

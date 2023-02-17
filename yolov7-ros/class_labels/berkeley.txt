@@ -1,0 +1,8 @@
+car
+person
+mouse
+bottle
+vase
+keyboard
+chair
+couch

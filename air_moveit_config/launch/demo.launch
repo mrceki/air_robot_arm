@@ -64,4 +64,13 @@
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
+  <group if="$(eval arg('moveit_controller_manager') == 'ros_control')">
+    <include file="$(find qb_hand_control)/launch/control_qbhand.launch">
+      <arg name="device_name" value="qbhand" /> 
+      <arg name="robot_namespace" value="qbhand"/>
+      <arg name="standalone" value="true"/>
+      <arg name="activate_on_initialization" value="true"/>
+      <arg name="use_rviz" value="false"/>
+    </include>   
+  </group>
 </launch>

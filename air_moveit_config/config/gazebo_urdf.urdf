@@ -213,9 +213,15 @@
     <joint name="yawj" type="revolute">
         <origin rpy="0 -1.57079632679 3.14159265359" xyz="0.0464 0 0.01 " />
         <parent link="pitch" />
-        <child link="qbhand_base_link" />
+        <child link="root_link" />
         <axis xyz="0 0 1" />
         <limit lower="-3.0" upper="3.0" effort="0" velocity="1.75" />
+    </joint>
+    <link name="root_link" />
+    <joint name="virtual_root_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0 " />
+        <parent link="root_link" />
+        <child link="qbhand_base_link" />
     </joint>
     <link name="qbhand_base_link">
         <inertial>
@@ -1836,7 +1842,7 @@
     <joint name="end_effector_frame_fixed_joint" type="fixed">
         <parent link="qbhand_base_link" />
         <child link="tool0" />
-        <origin xyz="0 0.275 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.12" rpy="0 0 0" />
     </joint>
     <transmission name="trans_s1j">
         <type>transmission_interface/SimpleTransmission</type>

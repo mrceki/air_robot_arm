@@ -8,14 +8,22 @@ find_package(catkin REQUIRED COMPONENTS
 	moveit_task_constructor_core
 	moveit_ros_planning_interface
 	rosparam_shortcuts
-)
-
+	pcl_conversions
+	pcl_ros
+	moveit_ros_perception
+	)
+find_package(Eigen3 REQUIRED)
 moveit_build_options()
 
-catkin_package(
-	CATKIN_DEPENDS roscpp
+include_directories(
+ ${catkin_INCLUDE_DIRS}
 )
 
+catkin_package(
+	INCLUDE_DIRS include
+	CATKIN_DEPENDS roscpp
+	DEPENDS EIGEN3
+)
 
 add_library(${PROJECT_NAME}_pick_place_task src/pick_place_task.cpp)
 target_link_libraries(${PROJECT_NAME}_pick_place_task ${catkin_LIBRARIES})
@@ -50,8 +58,14 @@ demo(modular)
 demo(alternative_path_costs)
 demo(ik_clearance_cost)
 demo(fallbacks_move_to)
-
+demo(detect_and_add_cylinder_collision_object_demo)
+demo(deneme)
 demo(pick_place_demo)
+demo(detect_and_add)
+demo(add_sphere)
+demo(add_scene)
+demo(sub_col)
+
 target_link_libraries(${PROJECT_NAME}_pick_place_demo ${PROJECT_NAME}_pick_place_task)
 
 install(DIRECTORY launch config

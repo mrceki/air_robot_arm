@@ -115,57 +115,45 @@ namespace air
         return roll_pitch_vel_in_mm;
     }
 
-    double RightArmIK::elbowLinearToRadianPosition(double position_in_mm)
+    double RightArmIK::elbowLinearToRadianPosition(double pos_in_mm)
     {
-            double x = position_in_mm;
-            double p1 = 3.392e-8;
-            double p2 = -7.62e-6;
-            double p3 = 0.0007375;
-            double p4 = -0.03685;
-            double p5 = 2.063;
-            double p6 = 13.11;
-            double degree_pos = p1*pow(x,5) + p2*pow(x,4) + p3*pow(x,3) + p4*pow(x,2) + p5*x + p6;
-            // To solve URDF Beckhoff mismatch
-            double beckhoff_urdf_error = 90.0; // 90 degree disparity
-            degree_pos -= beckhoff_urdf_error;
-            return toRadian(degree_pos);
+        constexpr double D    =150.57;
+        constexpr double L    =180.50;
+        constexpr double o1   =28.0;
+        constexpr double o2   =33.0;
+        constexpr double r    =54.95;
+        constexpr double h    =226.0;
+        constexpr double h1   {std::sqrt(h*h+o2*o2)};
+        double m     =pos_in_mm;
+        double Ly   {std::sqrt(o1*o1+(m+L)*(m+L))};
+        double A    {std::acos((r*r+h1*h1-Ly*Ly)/(2.0*r*h1))};
+        double B    {-360.0+90.0+D+toDegree(A+std::atan2(o2,h))};
+        return      toRadian(B);
     }
 
-    double RightArmIK::elbowLinearToRadianVelocity(double velocity_in_mm)
+    double RightArmIK::elbowLinearToRadianVelocity( double vel_in_mm)
     {
-        double elbow_coeff = 1.3;
-
-        return velocity_in_mm * elbow_coeff;
+        constexpr double r    {54.95};
+        return      vel_in_mm/r;
     }
 
-    double RightArmIK::elbowRadianToLinearPosition(double position_in_radian)
+    double RightArmIK::elbowRadianToLinearPosition(double pos_in_rad)
     {
-        double o1 = 28;
-        double o2 = 33;
-        double y = 226;
-        double r = 50;
-
-        double Lx = r*std::cos(toRadian(107) + position_in_radian) + o2;
-        double Ly = y - r*std::sin(toRadian(107) + position_in_radian);
-        double mm_distance = sqrt(pow(Lx,2) + pow(Ly,2) - pow(o1,2)) - 180.4;
-        return mm_distance;
+        constexpr double D    =150.57;
+        constexpr double L    =180.50;
+        constexpr double o1   =28.0;
+        constexpr double o2   =33.0;
+        constexpr double r    =54.95;
+        constexpr double h    =226.0;
+        constexpr double h1   {std::sqrt(h*h+o2*o2)};
+        double A    {pos_in_rad+2.0*M_PI-M_PI/2.0-toRadian(D)-std::atan2(o2,h)};
+        return      sqrt((r*r+h1*h1-2.0*r*h1*cos(A))-(o1*o1))-L;
     }
 
-    double RightArmIK::elbowRadianToLinearVelocity(double position_in_radian, double velocity_in_radian)
+    double RightArmIK::elbowRadianToLinearVelocity(double vel_in_rad)
     {
-        double o1 = 28;
-        double o2 = 33;
-        double y = 226;
-        double r = 50;
-
-        double Lx = r*std::cos(toRadian(107) + position_in_radian) + o2;
-        double Lx_dot = -r*std::sin(toRadian(107) + position_in_radian)*velocity_in_radian;
-        double Ly = y - r*std::sin(toRadian(107) + position_in_radian);
-        double Ly_dot = -r*std::cos(toRadian(107) + position_in_radian)*velocity_in_radian;
-
-        double numerator = Lx*Lx_dot + Ly*Ly_dot;
-        double denominator = sqrt(pow(Lx,2) + pow(Ly,2) - pow(o1,2));
-        return numerator/denominator;
+        constexpr double r    {54.95};
+        return      r*vel_in_rad;
     }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,8 +163,10 @@ namespace air
         
         m_RightArmIK = RightArmIK();
 
+        bhf::ads::SetLocalAddress({192, 168, 56, 1, 1, 1});
+        
         m_Route = new AdsDevice(m_RemoteIpV4, m_RemoteNetID, AMSPORT_R0_PLC_TC3);
-
+        
         m_AdsActTimestamp = new AdsVariable<uint32_t>(*m_Route, "GVL.fActTimeStamp");
 
         AdsVariable<uint32_t> AdsLastTimestamp {*m_Route, "GVL.fLastTimeStamp"};
@@ -258,10 +248,16 @@ namespace air
 
             AdsVariable<std::array<double, 7>> adsPosVar{*m_Route, "GVL.fGoalPos_Arm"};
             AdsVariable<std::array<double, 7>> adsVelVar{*m_Route, "GVL.fGoalVel_Arm"};
-
+            //AdsVariable<std::array<double, 7>> adsAccVar{*m_Route, "GVL.fGoalAcc_Arm"};
+            
             std::array<double, 7> posToWrite;
             std::array<double, 7> velToWrite;
-
+            /*std::array<double, 7> accToWrite;
+            
+            for(int i =0; i<7;i++)
+            {
+                accToWrite[i]=acc.at(i);
+            }*/
             // s1, s2, s3
             for(int i = 0; i < 3; i++)
             {
@@ -273,10 +269,10 @@ namespace air
 
             double beckhoff_urdf_error = M_PI / 2.0;
             double elbow_desired_position = pose.at(3);
-            elbow_desired_position += beckhoff_urdf_error;
+            //elbow_desired_position += beckhoff_urdf_error;
 
             posToWrite[3] = m_RightArmIK.elbowRadianToLinearPosition(elbow_desired_position);
-            velToWrite[3] = m_RightArmIK.elbowRadianToLinearVelocity(elbow_desired_position, vel.at(3));
+            velToWrite[3] = m_RightArmIK.elbowRadianToLinearVelocity(vel.at(3));
 
             // Roll | Pitch Joints
 
@@ -303,6 +299,7 @@ namespace air
 
             adsPosVar = posToWrite;
             adsVelVar = velToWrite;
+            //adsAccVar = accToWrite;
 
         } catch(const AdsException& ex){
             

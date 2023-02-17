@@ -52,3 +52,7 @@ add_executable(air_right_arm_hw_interface_node
 
 target_link_libraries(air_right_arm_hw_interface_node ${catkin_LIBRARIES} ADSLIB)
 target_link_directories(air_right_arm_hw_interface_node PUBLIC ${AdsLib_INCLUDE_DIRS})
+
+install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

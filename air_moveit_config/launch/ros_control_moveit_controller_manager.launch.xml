@@ -1,4 +1,7 @@
 <launch>
-	<!-- Define MoveIt controller manager plugin -->
-	<param name="moveit_controller_manager" value="moveit_ros_control_interface::MoveItControllerManager" />
+	<!-- Define MoveIt controller manager plugin "moveit_ros_control_interface::MoveItMultiControllerManager"-->
+	<param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+	<!-- loads ros_controllers to the param server -->
+  	<rosparam file="$(find air_moveit_config)/config/ros_controllers.yaml"/>
 </launch>
+	

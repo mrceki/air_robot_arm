@@ -1,6 +1,6 @@
 <launch>
   <arg name="serial_no"             default=""/>
-  <arg name="json_file_path"        default=""/>
+  <arg name="json_file_path"        default="$(find realsense2_camera)/launch/preset.json"/>
   <arg name="camera"                default="camera"/>
 
   <group ns="$(arg camera)">

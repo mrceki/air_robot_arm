@@ -10,9 +10,13 @@ namespace air
 
         m_ControllerManager.reset(new controller_manager::ControllerManager(this, m_NodeHandle));
 
-        ros::Duration updateFrequency = ros::Duration(1.0 / m_LoopFrequency);
-        
+
         m_NodeHandle.param("/arm/hardware_interface/loop_hz", m_LoopFrequency, 0.1);
+
+        ros::Duration updateFrequency = ros::Duration(1.0 / m_LoopFrequency);
+        //m_NonRealtimeLoop = m_NodeHandle.createTimer(updateFrequency, &RightArmHardwareInterface::update, this);
+
+ 
 
         m_NonRealtimeLoop = m_NodeHandle.createTimer(updateFrequency, &RightArmHardwareInterface::update, this);
 

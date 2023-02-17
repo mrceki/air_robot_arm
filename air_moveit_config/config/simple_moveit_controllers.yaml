@@ -1,4 +1,10 @@
 controller_list:
+  - name: /qbhand/control/qbhand_synergy_trajectory_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - qbhand_synergy_joint
   - name: air_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
@@ -11,9 +17,3 @@ controller_list:
       - rollj
       - pitchj
       - yawj
-  - name: gripper_controller
-    action_ns: follow_joint_trajectory
-    type: FollowJointTrajectory
-    default: True
-    joints:
-      - qbhand_synergy_joint

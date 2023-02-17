@@ -1,7 +1,7 @@
 <launch>
   <arg name="robot_name" doc="The unique robot name."/>
   <arg name="robot_package" doc="The base package name prefix for the robot configurations [urdf, rviz, ...]."/>
-  <arg name="use_controller_gui" default="false" doc="Choose whether or not to use the controller GUI."/>
+  <arg name="use_controller_gui" default="true" doc="Choose whether or not to use the controller GUI."/>
   <arg name="use_interactive_markers" default="false" doc="Choose whether or not to use interactive markers on rviz."/>
   <arg name="use_joint_limits" default="false" doc="Choose whether or not to use the robot joint limits."/>
   <arg name="use_waypoints" default="false" doc="Choose whether or not to use the waypoint references."/>

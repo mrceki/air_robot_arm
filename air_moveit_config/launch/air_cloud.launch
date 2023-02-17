@@ -1,9 +1,53 @@
-<?xml version="1.0"?>
 <launch>
+
+  <!-- The planning and execution components of MoveIt! configured to run -->
+  <!-- using the ROS-Industrial interface. -->
+
+  <!-- | 		PARAMETERS  		| -->
+
+  <!-- the "sim" argument controls whether we connect to a Simulated or Real robot. -->
+  <arg name="sim" default="false" doc="If true, the robot will be simulated in Gazebo" />
+
+
+  <!-- By default, we do not start a database (it can be large) -->
+  <arg name="db" default="false" />
+  <!-- Allow user to specify database location -->
+  <arg name="db_path" default="$(find qb_hand_moveit_config)/default_warehouse_mongo_db" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- By default, we will load or override the robot_description -->
+
+
+  <!-- Set execution mode for fake execution controllers -->
+  <arg name="execution_type" default="interpolate" />
+
+  <!-- Choose whether or not to use gui -->
+  <!-- <arg name="use_gui" default="false" /> -->
+
+  <!-- Choose whether or not to use rviz -->
+  <arg name="use_rviz" default="true" />
+
+  <!-- The unique robot namespace -->
+  <!--arg name="robot_namespace" default="qbhand"/-->
   <!-- MoveIt options -->
   <arg name="pipeline" default="ompl" doc="Planning pipeline to use with MoveIt"/>
   <!-- Launch MoveIt -->
+  
+
   <include file="$(dirname)/demo.launch" pass_all_args="true"/>
+     
+  <!-- Uncomment if you want to run gripper hardware interface!! -->
+
+  <!--include file="$(find qb_hand_control)/launch/control_qbhand.launch"-->
+    <!--arg name="device_name" value="qbhand" /--> 
+    <!--arg name="robot_namespace" value="qbhand"/-->
+    <!--arg name="standalone" value="true"/-->
+    <!--arg name="activate_on_initialization" value="true"/-->
+    <!--arg name="use_rviz" value="false"/-->
+  <!--/include-->
+
   <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
-    <!--arg name="base_frame_id" value="camera_link"/-->
+      <!--arg name="base_frame_id" value="camera_link"/-->
 </launch>
