@@ -3,6 +3,7 @@
 #include <moveit_msgs/CollisionObject.h>
 #include <geometry_msgs/Vector3.h>
 #include <std_msgs/Float32MultiArray.h>
+#include <cmath>
 
 ros::Subscriber sub;
 
@@ -12,7 +13,7 @@ void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr xyz)
 { 
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
   // Get the sphere dimensions from the message
-  float radius = 0.05;
+  float radius = 0.04; // Radius of sphere
   float x = xyz->data[0];
   float y = xyz->data[1];
   float z = xyz->data[2];
@@ -25,9 +26,12 @@ void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr xyz)
 
   // Specify the pose of the sphere
   geometry_msgs::Pose pose;
-  pose.position.x = z; // x to y
-  pose.position.y = -x; // y to -z
-  pose.position.z = -y; //z to x 
+  // To fix data transformations -> x = z, y = -x, z = -y
+  float cam_degree = 30; // Angle between robot and camera
+  pose.position.x = z + (((radius/2) / sin(((90-cam_degree) * M_PI)/180))*2);
+  pose.position.y = -x; 
+  pose.position.z = -y + radius; //
+  pose.orientation.w = 1;
 
   moveit_msgs::CollisionObject collision_object;
   collision_object.header.frame_id = "camera_link";

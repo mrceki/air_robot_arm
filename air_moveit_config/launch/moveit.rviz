@@ -22,7 +22,7 @@ Panels:
   - Class: rviz/Time
     Name: Time
     SyncMode: 1
-    SyncSource: ""
+    SyncSource: PointCloud2
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -58,7 +58,7 @@ Visualization Manager:
       MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
-      MoveIt_Use_Cartesian_Path: true
+      MoveIt_Use_Cartesian_Path: false
       MoveIt_Use_Constraint_Aware_IK: false
       MoveIt_Workspace:
         Center:
@@ -586,7 +586,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -601,7 +601,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
