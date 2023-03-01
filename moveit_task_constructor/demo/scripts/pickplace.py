@@ -1,18 +1,19 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from moveit.python_tools import roscpp_init
+from moveit_commander.roscpp_initializer import roscpp_initialize
 from moveit.task_constructor import core, stages
 from moveit_commander import PlanningSceneInterface
 from geometry_msgs.msg import PoseStamped, TwistStamped
 import time
+import rospy
 
-roscpp_init("pickplace")
-
+roscpp_initialize("pickplace")
+rospy.loginfo("Z<OERJGHSDFKJSDFJKASDJKLFASJKLDFJKLASDFJKLKASJDFJKLASDLF")
 # [pickAndPlaceTut1]
 # Specify robot parameters
-arm = "panda_arm"
-eef = "hand"
+arm = "air"
+eef = "gripper"
 # [pickAndPlaceTut1]
 
 # [pickAndPlaceTut2]
@@ -29,9 +30,9 @@ psi.remove_world_object()
 objectPose = PoseStamped()
 objectPose.header.frame_id = "world"
 objectPose.pose.orientation.x = 1.0
-objectPose.pose.position.x = 0.30702
-objectPose.pose.position.y = 0.0
-objectPose.pose.position.z = 0.285
+objectPose.pose.position.x = 0.4
+objectPose.pose.position.y = -0.23
+objectPose.pose.position.z = 0.7
 # [initCollisionObject]
 
 # Add the grasp object to the planning scene
@@ -66,7 +67,7 @@ task.add(stages.Connect("connect1", planners))
 grasp_generator = stages.GenerateGraspPose("Generate Grasp Pose")
 grasp_generator.angle_delta = 0.2
 grasp_generator.pregrasp = "open"
-grasp_generator.grasp = "close"
+grasp_generator.grasp = "closed"
 grasp_generator.setMonitoredStage(task["current"])  # Generate solutions for all initial states
 # [initAndConfigGenerateGraspPose]
 # [pickAndPlaceTut5]
@@ -77,7 +78,7 @@ grasp_generator.setMonitoredStage(task["current"])  # Generate solutions for all
 simpleGrasp = stages.SimpleGrasp(grasp_generator, "Grasp")
 # Set frame for IK calculation in the center between the fingers
 ik_frame = PoseStamped()
-ik_frame.header.frame_id = "panda_hand"
+ik_frame.header.frame_id = "qbhand_base_link"
 ik_frame.pose.position.z = 0.1034
 simpleGrasp.setIKFrame(ik_frame)
 # [initAndConfigSimpleGrasp]
@@ -98,7 +99,7 @@ pick.setApproachMotion(approach, 0.03, 0.1)
 
 # Twist to lift the object
 lift = TwistStamped()
-lift.header.frame_id = "panda_hand"
+lift.header.frame_id = "qbhand_base_link"
 lift.twist.linear.z = -1.0
 pick.setLiftMotion(lift, 0.03, 0.1)
 # [pickAndPlaceTut7]
@@ -140,7 +141,8 @@ simpleUnGrasp = stages.SimpleUnGrasp(place_generator, "UnGrasp")
 place = stages.Place(simpleUnGrasp, "Place")
 place.eef = eef
 place.object = object_name
-place.eef_frame = "panda_link8"
+place.eef_frame = "qbhand_base_link"
+#place.eef_frame = "panda_link8"
 # [initAndConfigSimpleUnGrasp]
 
 # Twist to retract from the object
@@ -151,7 +153,7 @@ place.setRetractMotion(retract, 0.03, 0.1)
 
 # Twist to place the object
 placeMotion = TwistStamped()
-placeMotion.header.frame_id = "panda_hand"
+placeMotion.header.frame_id = "qbhand_base_link"
 placeMotion.twist.linear.z = 1.0
 place.setPlaceMotion(placeMotion, 0.03, 0.1)
 

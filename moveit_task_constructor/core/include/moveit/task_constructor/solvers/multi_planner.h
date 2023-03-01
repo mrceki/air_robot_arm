@@ -1,7 +1,7 @@
 /*********************************************************************
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2017, Bielefeld University
+ *  Copyright (c) 2023, Bielefeld University
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -33,25 +33,45 @@
  *********************************************************************/
 
 /* Authors: Robert Haschke
-   Desc:    Planner Interface: implementation details shared across different planners
+   Desc:    meta planner, running multiple planners in parallel or sequence
 */
 
-#include <moveit/task_constructor/solvers/planner_interface.h>
-#include <moveit/trajectory_processing/time_optimal_trajectory_generation.h>
+#pragma once
 
-using namespace trajectory_processing;
+#include <moveit/task_constructor/solvers/planner_interface.h>
+#include <vector>
 
 namespace moveit {
 namespace task_constructor {
 namespace solvers {
 
-PlannerInterface::PlannerInterface() {
-	auto& p = properties();
-	p.declare<double>("timeout", std::numeric_limits<double>::infinity(), "timeout for planner (s)");
-	p.declare<double>("max_velocity_scaling_factor", 1.0, "scale down max velocity by this factor");
-	p.declare<double>("max_acceleration_scaling_factor", 1.0, "scale down max acceleration by this factor");
-	p.declare<TimeParameterizationPtr>("time_parameterization", std::make_shared<TimeOptimalTrajectoryGeneration>());
-}
+MOVEIT_CLASS_FORWARD(MultiPlanner);
+
+/** A meta planner that runs multiple alternative planners in sequence and returns the first found solution.
+ *
+ * This is useful to sequence different planning strategies of increasing complexity,
+ * e.g. Cartesian or joint-space interpolation first, then OMPL, ...
+ * This is (slightly) different from the Fallbacks container, as the MultiPlanner directly applies its planners to each
+ * individual planning job. In contrast, the Fallbacks container first runs the active child to exhaustion before
+ * switching to the next child, which possibly applies a different planning strategy.
+ */
+class MultiPlanner : public PlannerInterface, public std::vector<solvers::PlannerInterfacePtr>
+{
+public:
+	using PlannerList = std::vector<solvers::PlannerInterfacePtr>;
+	using PlannerList::PlannerList;  // inherit all std::vector constructors
+
+	void init(const moveit::core::RobotModelConstPtr& robot_model) override;
+
+	bool plan(const planning_scene::PlanningSceneConstPtr& from, const planning_scene::PlanningSceneConstPtr& to,
+	          const moveit::core::JointModelGroup* jmg, double timeout, robot_trajectory::RobotTrajectoryPtr& result,
+	          const moveit_msgs::Constraints& path_constraints = moveit_msgs::Constraints()) override;
+
+	bool plan(const planning_scene::PlanningSceneConstPtr& from, const moveit::core::LinkModel& link,
+	          const Eigen::Isometry3d& offset, const Eigen::Isometry3d& target, const moveit::core::JointModelGroup* jmg,
+	          double timeout, robot_trajectory::RobotTrajectoryPtr& result,
+	          const moveit_msgs::Constraints& path_constraints = moveit_msgs::Constraints()) override;
+};
 }  // namespace solvers
 }  // namespace task_constructor
 }  // namespace moveit
