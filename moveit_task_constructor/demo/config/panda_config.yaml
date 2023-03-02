@@ -6,10 +6,11 @@ arm_group_name: "panda_arm"
 eef_name: "hand"
 hand_group_name: "hand"
 hand_frame: "panda_link8"
+
 # Poses
 hand_open_pose: "open"
-hand_close_pose: "closed"
-arm_home_pose: "home"
+hand_close_pose: "close"
+arm_home_pose: "ready"
 
 # Scene frames
 world_frame: "world"
