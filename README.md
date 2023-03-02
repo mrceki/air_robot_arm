@@ -46,3 +46,5 @@ rosrun air_moveit_config add_sphere
 ```
 roslaunch air_moveit_config air_mtc.launch
 ```
+## Tips
+The workspace may not be created when you clone the ADS repository.
