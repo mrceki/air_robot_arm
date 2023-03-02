@@ -5,7 +5,7 @@
   <arg name="controller" default="fake" />
   <arg name="moveit_controller_manager" value="$(arg controller)"/>
 
-  <param name="robot_description" textfile="$(find air_description)/urdf/air.urdf" />
+  <!--param name="robot_description" textfile="$(find air_description)/urdf/air.urdf" /-->
 
 <!-- Given the published joint states, publish tf for the robot links -->
   <group if="$(eval arg('moveit_controller_manager') == 'ros_control')">
@@ -17,7 +17,7 @@
 
   <include file="$(dirname)/demo.launch" pass_all_args="true">
     <!-- robot description is loaded by gazebo.launch, to enable Gazebo features -->
-    <arg name="load_robot_description" value="false" />
+    <arg name="load_robot_description" value="true" />
     <arg name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
   </include>
 </launch>

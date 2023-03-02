@@ -1,4 +1,5 @@
 <launch>
+
   <arg name="serial_no"           default=""/>
   <arg name="usb_port_id"         default=""/>
   <arg name="device_type"         default=""/>
@@ -8,7 +9,7 @@
   <arg name="external_manager"    default="false"/>
   <arg name="manager"             default="realsense2_camera_manager"/>
   <arg name="output"              default="screen"/>
-  <arg name="respawn"              default="false"/>
+  <arg name="respawn"             default="false"/>
 
   <arg name="fisheye_width"       default="640"/>
   <arg name="fisheye_height"      default="480"/>
@@ -55,7 +56,7 @@
   <arg name="publish_tf"                default="true"/>
   <arg name="tf_publish_rate"           default="0"/>
 
-  <arg name="filters"                   default=""/>
+  <arg name="filters"                   default="pointcloud"/>
   <arg name="clip_distance"             default="-2"/>
   <arg name="linear_accel_cov"          default="0.01"/>
   <arg name="initial_reset"             default="true"/>
@@ -66,11 +67,13 @@
   <arg name="calib_odom_file"           default=""/>
   <arg name="publish_odom_tf"           default="false"/>
 
-  <arg name="stereo_module/exposure/1"  default="7500"/>true
+  <arg name="stereo_module/exposure/1"  default="7500"/>
   <arg name="stereo_module/gain/1"      default="16"/>
   <arg name="stereo_module/exposure/2"  default="1"/>
   <arg name="stereo_module/gain/2"      default="16"/>
-  
+  <param name="/camera/motion_module/global_time_enabled" type="bool" value="true"/>
+  <param name="/camera/l500_depth_sensor/global_time_enabled" type="bool" value="true"/>
+  <param name="/camera/rgb_camera/global_time_enabled" type="bool" value="true"/>
   
 
   <group ns="$(arg camera)">

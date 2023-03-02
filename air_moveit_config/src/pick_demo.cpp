@@ -17,27 +17,32 @@ void air_pick::pick(){
 
   move_group->setPlanningTime(45.0);
   geometry_msgs::Pose pick_pose, place_pose;
-  geometry_msgs::PoseStamped current_pose;
+  //geometry_msgs::PoseStamped current_pose;
 
   ROS_INFO("Object Pose: x= %f, y= %f, z= %f ",m_x,m_y,m_z);
 
   // Pick Pose
-  current_pose = move_group->getCurrentPose("tool0");
-  pick_pose.position.x = m_x;
-  pick_pose.position.y = m_y;
-  pick_pose.position.z = m_z + 0.05;
-  pick_pose.orientation = current_pose.pose.orientation;
-
+  //current_pose = move_group->getCurrentPose("tool0");
+  pick_pose.position.x = 0.63;//m_x;
+  pick_pose.position.y = 0.2;//m_y;
+  pick_pose.position.z = 0.85;//m_z + 0.05;
+  pick_pose.orientation.w = 0.5;
+  pick_pose.orientation.x = -0.5;
+  pick_pose.orientation.y = 0.5;
+  pick_pose.orientation.z = -0.5;
+  ROS_INFO("POSE GENERATED");
   // Place Pose
   place_pose.position.x = m_x;
   place_pose.position.y = m_y + 0,05;
   place_pose.position.z = m_z + 0.1;
   move_group->setPoseTarget(pick_pose);
+  ROS_INFO("POSE TARGET SETTED");
 
   // Plan and execute the pick motion
   moveit::planning_interface::MoveGroupInterface::Plan plan;
   moveit::planning_interface::MoveItErrorCode result = move_group->plan(plan);
-  
+    ROS_INFO("PLANNED");
+
   if (result == moveit::planning_interface::MoveItErrorCode::SUCCESS)
   {
     move_group->execute(plan);
@@ -77,9 +82,11 @@ void air_pick::planningSceneWorldCallback(const moveit_msgs::PlanningScene::Cons
 
 int main(int argc, char** argv)
 {
+
   ros::init(argc, argv, "pick_and_place");
+
   ros::NodeHandle nh;
   air_pick obj(nh);
-  ros::spinOnce();
+  ros::spin();
   return 0;
 }
