@@ -30,8 +30,11 @@ void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr xyz)
   float cam_degree = 30; // Angle between robot and camera
   pose.position.x = z + (((radius/2) / sin(((90-cam_degree) * M_PI)/180))*2);
   pose.position.y = -x; 
-  pose.position.z = -y + radius; //
-  pose.orientation.w = 1;
+  pose.position.z = -y + radius; //hotfix for collision
+
+  // Orientation fix (to do: cam_degree)
+  pose.orientation.w = 0.9659258;
+  pose.orientation.y = -0.258819;
 
   moveit_msgs::CollisionObject collision_object;
   collision_object.header.frame_id = "camera_link";
