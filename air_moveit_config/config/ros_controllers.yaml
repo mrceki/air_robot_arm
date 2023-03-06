@@ -4,7 +4,7 @@ arm:
     # Creates the /joint_states topic necessary in ROS
     joint_state_controller:
         type: joint_state_controller/JointStateController
-        publish_rate: 50
+        publish_rate: 100
         joints:
           - s1j
           - s2j
@@ -13,9 +13,14 @@ arm:
           - rollj
           - pitchj
           - yawj
-
+          
+    qbhand_joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 100
+      
     arm_position_controller:
         type: pos_vel_acc_controllers/JointTrajectoryController
+        publish_rate: 100
         joints:
           - s1j
           - s2j
@@ -61,32 +66,32 @@ arm:
             i: 1
             i_clamp: 1
         constraints:
-    #      goal_time: 10.0                  # Override default
+          goal_time: 10.0                  # Override default
           stopped_velocity_tolerance: 0
           s1j:
-            goal: 3.14 #0.05 # 3 degree
-            trajectory: 3.14 #0.1 # 6 degree
+            goal: 10.0 #0.05 # 3 degree
+            trajectory: 10.0 #0.1 # 6 degree
           s2j:
-            goal: 3.14 #0.05 # 3 degree
-            trajectory: 3.14 #0.1 # 6 degree
+            goal: 10.0 #0.05 # 3 degree
+            trajectory: 10.0 #0.1 # 6 degree
           s3j:
-            goal: 3.14 #0.05 # 3 degree
-            trajectory: 3.14 #0.1 # 6 degree
+            goal: 10.0 #0.05 # 3 degree
+            trajectory: 10.0 #0.1 # 6 degree
           ej:
-            goal: 3.14 #0.2 # 12 degree
-            trajectory: 3.14 #0.25 # 15 degree
+            goal: 10.0 #0.2 # 12 degree
+            trajectory: 10.0 #0.25 # 15 degree
           rollj:
-            goal: 3.14 #0.1 # 6 degree
-            trajectory: 3.14 #0.1 # 6 degree
+            goal: 10.0 #0.1 # 6 degree
+            trajectory: 10.0 #0.1 # 6 degree
           pitchj:
-            goal: 3.14 #0.1 # 6 degree
-            trajectory: 3.14 #0.1 # 6 degree
+            goal: 10.0 #0.1 # 6 degree
+            trajectory: 10.0 #0.1 # 6 degree
           yawj:
-            goal: 3.14 #0.2 # 12 degree
-            trajectory: 3.14 #0.5 # 30 degree
+            goal: 10.0 #0.2 # 12 degree
+            trajectory: 10.0 #0.5 # 30 degree
 
-        state_publish_rate:  50            # Override default
-        action_monitor_rate: 30            # Override default
+        state_publish_rate:  100            # Override default
+        action_monitor_rate: 120           # Override default
         stop_trajectory_duration: 0        # Override default
 
 controller_list:
@@ -108,3 +113,12 @@ controller_list:
     default: True
     joints:
       - qbhand_synergy_joint
+    constraints:  # fake values due to the adaptability
+      goal_time: 10.0
+      stopped_velocity_tolerance: 100.0
+      qbhand_synergy_joint:
+        trajectory: 10.0
+        goal: 10.0
+    state_publish_rate: 100
+    action_monitor_rate: 120
+    stop_trajectory_duration: 0
