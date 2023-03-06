@@ -9,7 +9,7 @@
 
 <!-- Given the published joint states, publish tf for the robot links -->
   <group if="$(eval arg('moveit_controller_manager') == 'ros_control')">
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" args="-publish_frequency 50.0"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" args="-publish_frequency 100.0"/>
     <include file="$(dirname)/ros_controllers.launch">
       <arg name="hw" value="real"/>
     </include>
@@ -20,4 +20,6 @@
     <arg name="load_robot_description" value="true" />
     <arg name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
   </include>
+  <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
 </launch>

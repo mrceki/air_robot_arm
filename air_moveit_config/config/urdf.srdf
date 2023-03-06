@@ -92,7 +92,7 @@
         <joint name="qbhand_synergy_joint" value="0.5"/>
     </group_state>
     <group_state name="full_closed" group="gripper">
-        <joint name="qbhand_synergy_joint" value="0.9"/>
+        <joint name="qbhand_synergy_joint" value="0.8"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="pitch" group="gripper" parent_group="air"/>
