@@ -247,7 +247,7 @@ bool PickPlaceTask::init() {
 			// Set hand forward direction
 			geometry_msgs::Vector3Stamped vec;
 			vec.header.frame_id = hand_frame_;
-			vec.vector.z = 1.0;
+			vec.vector.y = 1.0;
 			stage->setDirection(vec);
 			grasp->insert(std::move(stage));
 		}
@@ -448,12 +448,12 @@ bool PickPlaceTask::init() {
 		{
 			auto stage = std::make_unique<stages::MoveRelative>("retreat after place", cartesian_planner);
 			stage->properties().configureInitFrom(Stage::PARENT, { "group" });
-			stage->setMinMaxDistance(.12, .25);
+				stage->setMinMaxDistance(.00, .05);
 			stage->setIKFrame(hand_frame_);
 			stage->properties().set("marker_ns", "retreat");
 			geometry_msgs::Vector3Stamped vec;
 			vec.header.frame_id = hand_frame_;
-			vec.vector.z = -1.0;
+			vec.vector.z = -0.05;
 			stage->setDirection(vec);
 			place->insert(std::move(stage));
 		}

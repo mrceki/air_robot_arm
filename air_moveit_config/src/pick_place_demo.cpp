@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 	ros::AsyncSpinner spinner(1);
 	spinner.start();
 
-	moveit_task_constructor_demo::setupDemoScene(pnh);
+	//moveit_task_constructor_demo::setupDemoScene(pnh);
 
 	// Construct and run pick/place task
 	moveit_task_constructor_demo::PickPlaceTask pick_place_task("pick_place_task", pnh);
@@ -58,17 +58,23 @@ int main(int argc, char** argv) {
 		ROS_INFO_NAMED(LOGNAME, "Initialization failed");
 		return 1;
 	}
+	else{
+		system("rosnode kill air_collision_publisher");
+	}	
 
 	if (pick_place_task.plan()) {
 		ROS_INFO_NAMED(LOGNAME, "Planning succeded");
 		if (pnh.param("execute", false)) {
 			pick_place_task.execute();
 			ROS_INFO_NAMED(LOGNAME, "Execution complete");
+			system("rosrun air_moveit_config add_sphere");
 		} else {
 			ROS_INFO_NAMED(LOGNAME, "Execution disabled");
+			system("rosrun air_moveit_config add_sphere");
 		}
 	} else {
 		ROS_INFO_NAMED(LOGNAME, "Planning failed");
+		system("rosrun air_moveit_config add_sphere");
 	}
 
 	// Keep introspection alive
