@@ -163,7 +163,7 @@ namespace air
         
         m_RightArmIK = RightArmIK();
 
-        bhf::ads::SetLocalAddress({192, 168, 56, 1, 1, 1});
+        bhf::ads::SetLocalAddress({192, 168, 6, 101, 1, 1});
         
         m_Route = new AdsDevice(m_RemoteIpV4, m_RemoteNetID, AMSPORT_R0_PLC_TC3);
         

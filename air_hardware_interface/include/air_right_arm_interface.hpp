@@ -74,11 +74,11 @@ namespace air
         std::vector<std::string> m_JointNames;
         std::vector<double> m_JointPositions;
 
-        AmsNetId m_RemoteNetID  { 192, 168, 56, 101, 1, 1 }; //TcBSD
+        AmsNetId m_RemoteNetID  { 192, 168, 6, 29, 1, 1 }; //TcBSD
 
                 //{172, 18, 212, 67, 1, 1}; {41, 118, 185 , 65 ,1 ,1}; {192, 168, 6, 29, 1, 1};
 
-        const std::string m_RemoteIpV4 =  "192.168.56.101"; //TcBSD
+        const std::string m_RemoteIpV4 =  "192.168.6.29"; //TcBSD
                 
                 //"169.254.186.54"; "192.168.225.129"; "192.168.6.29";
 
