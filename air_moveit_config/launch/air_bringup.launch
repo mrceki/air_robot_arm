@@ -4,6 +4,7 @@
   <!--For real hardware "ros_control"-->
   <arg name="controller" default="fake" />
   <arg name="moveit_controller_manager" value="$(arg controller)"/>
+  <arg name="slave" default="false"/>"
 
 
   <arg name="load_robot_description" default="false" />
@@ -15,7 +16,7 @@
     <arg name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
   </include>
 
-  <include file="$(find yolov7_ros)/launch/yolov7.launch" pass_all_args="true"/>
+  <include file="$(find yolov7_ros)/launch/yolov7.launch" pass_all_args="true" unless="$(arg slave)"/>
   <include file="$(find realsense2_camera)/launch/rs_camera.launch" unless="$(arg bagfile)"/>
 
   <node pkg="air_moveit_config" name="air_detection_publisher" type="detect_and_add" output="screen"/>
