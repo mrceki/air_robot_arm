@@ -13,7 +13,7 @@ void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr xyz)
 { 
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
   // Get the sphere dimensions from the message
-  float radius = 0.04; // Radius of sphere
+  float radius = 0.0685; // Radius of sphere(ball)
   float x = xyz->data[0];
   float y = xyz->data[1];
   float z = xyz->data[2];
