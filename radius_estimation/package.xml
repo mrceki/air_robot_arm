@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>radius_estimation</name>
+  <version>0.1.0</version>
+  <description>The radius_estimation package provides object detection and radius estimation using YOLOv7 and RealSense cameras in ROS environment.</description>
+
+  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>message_filters</depend>
+  <depend>realsense2_camera</depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_depend>rospy</build_depend>
+  <exec_depend>rospy</exec_depend>
+</package>
