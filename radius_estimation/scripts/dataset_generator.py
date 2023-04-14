@@ -16,12 +16,12 @@ class DatasetCreator:
         self.previous_depth = None
         self.image_sub = rospy.Subscriber('/yolov7/yolov7', Detection2DArray, self.detection_callback)
         self.depth_image_sub = rospy.Subscriber('/camera/aligned_depth_to_color/image_raw', Image, self.depth_callback)
-        self.dataset_path = "/home/cenk/datasetxxxxxx/"
+        self.dataset_path = "/home/cenk/denemedataset2/"
         if not os.path.exists(self.dataset_path):
             os.makedirs(self.dataset_path)
     
     def detection_callback(self, detection_array):
-        radius = 6.685
+        radius = 3.1
         for detection in detection_array.detections:
             if detection.results[0].id == 32: # nesne ID'si 33 ise
                 print("detected")
