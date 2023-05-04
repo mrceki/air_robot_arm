@@ -19,8 +19,8 @@
   <include file="$(find yolov7_ros)/launch/yolov7.launch" pass_all_args="true" unless="$(arg slave)"/>
   <include file="$(find realsense2_camera)/launch/rs_camera.launch" unless="$(arg bagfile)"/>
 
-  <node pkg="air_moveit_config" name="air_detection_publisher" type="detect_and_add_orange" output="screen"/>
+  <node pkg="air_moveit_config" name="air_detection_publisher" type="detect_and_add_ball" output="screen"/>
   <node pkg="air_moveit_config" name="air_collision_publisher" type="add_sphere" output="screen"/>
-  
+  <node pkg="radius_estimation" name="regression_node"  type="estimate.py" output="screen"/>
 
 </launch>
