@@ -1,0 +1,30 @@
+controller_list:
+  - name: air_right_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - s1j
+      - s2j
+      - s3j
+      - ej
+      - rollj
+      - pitchj
+      - yawj
+  - name: air_left_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - s1_2j
+      - s2_2j
+      - s3_2j
+      - e_2j
+      - roll_2j
+      - pitch_2j
+  - name: gripper_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - qbhand_synergy_joint

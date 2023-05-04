@@ -1,0 +1,96 @@
+air_right_arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - s1j
+    - s2j
+    - s3j
+    - ej
+    - rollj
+    - pitchj
+    - yawj
+  gains:
+    s1j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    s2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    s3j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    ej:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    rollj:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    pitchj:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    yawj:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+air_left_arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - s1_2j
+    - s2_2j
+    - s3_2j
+    - e_2j
+    - roll_2j
+    - pitch_2j
+  gains:
+    s1_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    s2_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    s3_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    e_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    roll_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    pitch_2j:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+gripper_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - qbhand_synergy_joint
+  gains:
+    qbhand_synergy_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
