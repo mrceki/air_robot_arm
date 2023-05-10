@@ -43,7 +43,7 @@ void air_object::yolo_callback(const vision_msgs::Detection2DArrayConstPtr& d2d_
         const auto resVal = *res;
         
       } */
-      if(detection.results[0].id == 32 || detection.results[0].id == 40){ //id of sports_ball in coco
+      if(detection.results[0].id == 47 || detection.results[0].id == 49 || detection.results[0].id == 80 ){ //id of sports_ball in coco
         ROS_INFO("Object Detected...");
         int center_x = (int) detection.bbox.center.x;
         int center_y = (int) detection.bbox.center.y;
