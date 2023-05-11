@@ -401,7 +401,7 @@ bool PickPlaceTask::init() {
 			geometry_msgs::PoseStamped p;
 			p.header.frame_id = object_reference_frame_;
 			p.pose = place_pose_;
-			p.pose.position.z += 0.5 * object_dimensions_[0] + place_surface_offset_;
+			//p.pose.position.z += 0.5 * object_dimensions_[0] + place_surface_offset_;
 			stage->setPose(p);
 			stage->setMonitoredStage(pick_stage_ptr);  // hook into successful pick solutions
 
@@ -448,12 +448,12 @@ bool PickPlaceTask::init() {
 		{
 			auto stage = std::make_unique<stages::MoveRelative>("retreat after place", cartesian_planner);
 			stage->properties().configureInitFrom(Stage::PARENT, { "group" });
-			stage->setMinMaxDistance(.12, .25);
+			stage->setMinMaxDistance(.05, .25);
 			stage->setIKFrame(hand_frame_);
 			stage->properties().set("marker_ns", "retreat");
 			geometry_msgs::Vector3Stamped vec;
 			vec.header.frame_id = hand_frame_;
-			vec.vector.z = -1.0;
+			vec.vector.z = -0.2;
 			stage->setDirection(vec);
 			place->insert(std::move(stage));
 		}

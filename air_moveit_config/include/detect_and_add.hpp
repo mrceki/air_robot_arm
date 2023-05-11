@@ -5,7 +5,12 @@
 #include <std_msgs/Int32MultiArray.h>
 #include <std_msgs/Float32.h>
 #include <vision_msgs/Detection2DArray.h>
+#include <vision_msgs/Detection3DArray.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <pcl/point_types.h>
+
+#include <algorithm>
+
 class air_object
 {
     public:
@@ -14,8 +19,11 @@ class air_object
 
     void yolo_callback(const vision_msgs::Detection2DArrayConstPtr& d2d_arr_msg);
     void pcl_callback(const sensor_msgs::PointCloud2ConstPtr& msg);
-    void radius_estimator_callback(const std_msgs::Float32ConstPtr& radius);
-    void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr& xyz);
+    void radius_estimator_callback(const std_msgs::Float32MultiArray::ConstPtr& radius);
+    void sphereCallback(const vision_msgs::Detection3DArrayConstPtr& detections);
+    //void sphereCallback(const std_msgs::Float32MultiArray::ConstPtr& xyz);
+
+    pcl::PointXYZ getPointXYZ(int x, int y);
     std_msgs::Float32MultiArray m_xyz;
 
     ros::NodeHandle m_NodeHandle;
@@ -26,6 +34,7 @@ class air_object
     ros::Subscriber m_sub;
     ros::Subscriber m_estimator_sub;
 
+    sensor_msgs::PointCloud2 m_pcl_msg;
     float m_x;
     float m_y;
     float m_z;
@@ -34,8 +43,11 @@ class air_object
     int m_center_y;
     int m_center_x_buffer;
     int m_center_y_buffer;
-    float m_radius;
+    std::vector<float> m_radius;
+
     private:
+
+    const std::vector<uint16_t> m_RegisteredObjIDs = {32, 40};
 
 };
 

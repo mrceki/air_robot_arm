@@ -97,7 +97,7 @@ void setupDemoScene(ros::NodeHandle& pnh) {
 	moveit::planning_interface::PlanningSceneInterface psi;
 	if (pnh.param("spawn_table", true))
 		spawnObject(psi, createTable(pnh));
-	spawnObject(psi, createObject(pnh));
+	//spawnObject(psi, createObject(pnh));
 }
 
 PickPlaceTask::PickPlaceTask(const std::string& task_name, const ros::NodeHandle& pnh)
@@ -240,14 +240,15 @@ bool PickPlaceTask::init() {
 		{
 			auto stage = std::make_unique<stages::MoveRelative>("approach object", cartesian_planner);
 			stage->properties().set("marker_ns", "approach_object");
-			stage->properties().set("link", hand_frame_);
+			stage->setIKFrame(hand_frame_);
+			//stage->properties().set("link", hand_frame_);
 			stage->properties().configureInitFrom(Stage::PARENT, { "group" });
 			stage->setMinMaxDistance(approach_object_min_dist_, approach_object_max_dist_);
 
 			// Set hand forward direction
 			geometry_msgs::Vector3Stamped vec;
-			vec.header.frame_id = hand_frame_;
-			vec.vector.y = 1.0;
+			vec.header.frame_id = world_frame_;
+			vec.vector.z = -1.0;
 			stage->setDirection(vec);
 			grasp->insert(std::move(stage));
 		}

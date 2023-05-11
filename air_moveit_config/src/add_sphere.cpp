@@ -51,14 +51,14 @@ void air_object::sphereCallback(const vision_msgs::Detection3DArrayConstPtr& det
       ROS_INFO("Radius: %f", radius);
 
       geometry_msgs::Pose pose;
-      float cam_degree = 30; // Angle between robot and camera
+      float cam_degree = 42; // Angle between robot and camera
       pose.position.x = z + (((radius/2) / sin(((90-cam_degree) * M_PI)/180))*2);
       pose.position.y = -x; 
       pose.position.z = -y + (radius/4); //hotfix for collision
 
       // Orientation fix (to do: cam_degree)
-      pose.orientation.w = 0.9659258;
-      pose.orientation.y = -0.258819;
+      pose.orientation.w = 0.9238794463501697;
+      pose.orientation.y = -0.38268364037636077;
 
       moveit_msgs::CollisionObject collision_object;
       collision_object.header.frame_id = "camera_link";

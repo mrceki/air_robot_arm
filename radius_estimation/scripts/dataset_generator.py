@@ -21,9 +21,9 @@ class DatasetCreator:
             os.makedirs(self.dataset_path)
     
     def detection_callback(self, detection_array):
-        radius = 3.1
+        radius = 3.4
         for detection in detection_array.detections:
-            if detection.results[0].id == 32: # nesne ID'si 33 ise
+            if detection.results[0].id == 32 or detection.results[0].id == 47 : # nesne ID'si 33 ise
                 print("detected")
                 bbox = detection.bbox
                 # Derinlik verisi mevcutsa
@@ -53,3 +53,4 @@ if __name__ == '__main__':
     rospy.init_node('dataset_creator')
     dataset_creator = DatasetCreator()
     rospy.spin()
+data = data.reshape(1, -1) # add an extra dimension 

@@ -1,7 +1,7 @@
 # Modeli kaydetme
 import joblib
 # Kaydedilen modeli yükleme
-loaded_model = joblib.load("regression_model.joblib")
+loaded_model = joblib.load("/home/cenk/regression_model2.joblib")
 
 # Gerçek zamanlı kullanım
 distance = 0.366
